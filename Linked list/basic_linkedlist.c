@@ -220,6 +220,4 @@ int main(){
     int index = search(head, 5);
     printf("\nTim thay tai chi so %d", index);
  
-    printf("\nBan co the thu them nhe!");
- 
 }
