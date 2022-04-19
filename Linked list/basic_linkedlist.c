@@ -219,5 +219,4 @@ int main(){
     printf("\n==Thu tim kiem 1 phan tu trong linked list==");
     int index = search(head, 5);
     printf("\nTim thay tai chi so %d", index);
- 
 }
