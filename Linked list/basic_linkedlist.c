@@ -10,138 +10,101 @@ typedef struct linkedList *node; //thay thế kiểu dữ liệu linkedList bằ
 
 node Createnode(int value) {
     node temp; //declare a node
-    temp = (node)malloc(sizeof(struct linkedList)); //cấp phát vùng nhớ 
-    temp->next = NULL; //cho next trỏ tới NULL
-    temp->data = value; //gán giá trị cho node
-    return temp; //trả về node mới đã có giá trị
+    temp = (node)malloc(sizeof(struct linkedList)); 
+    temp->data = value;
+    return temp; 
 }
 
-//thêm vào đầu
-node addHead(node head, int value) {
-    node temp = Createnode(value); //khởi tạo node temp với data = value
-    if(head == NULL) {
-        head = temp; //Nếu danh sách trống thì gán head = temp
+node addHead(node l, int value) {
+    node temp = Createnode(value);
+    if(l == NULL) {
+        l = temp;
     } else {
-        temp->next = head; //trỏ next của temp là head
-        head = temp; // đổi head hiện tại bằng temp
+        temp->next = l;
+        l = temp;
     }
-    return head;
+    return temp;
 }
 
-//thêm vào cuối
-
-node addEnd(node head, int value) {
-    node temp, p; //Khai báo 2 biến node tạm
+node addEnd(node l, int value) {
+    node temp, p;
     temp = Createnode(value);
-    if(head == NULL) {
-        head = temp;
+    if(l == NULL) {
+        l = temp;
     } else {
-        p = head;
+        p = l;
         while(p->next != NULL) {
             p = p->next;
         }
         p->next = temp;
     }
-    return head;
+    return l;
 }
 
-//thêm vào vị trí bất kì
-
-node addAt(node head, int value, int position) {
-    if(position == 0 || head == NULL) {
-        head = addHead(head, value);
+node addAt(node l, int value, int position) {
+    if(position == 0 || l == NULL) {
+        return addHead(l, value);
     } else {
-        //tìm vị trí cần chèn, dùng k để đếm vị trí
         int k = 1;
-        node p = head;
+        node p = l;
         while(p != NULL && k != position) {
             p = p->next;
             ++k;
         }
         if(k != position) {
-            //Nếu duyệt hết danh sách mà chưa đến vị trí cần chèn thì chèn vào vị trí cuối cùng
-            head = addEnd(head, value);
-            printf("Vị trí cần chèn vượt qua vị trí cuối cùng");
+            printf("Làm gì có vị trí này");
         } else {
             node temp = Createnode(value);
             temp->next = p->next;
             p->next = temp;
         }
+        return l;
     }
-    return head;
 }
 
-//xoá đầu
-
-node deleteHead(node head, int value) {
-    if(head == NULL) {
-        printf("\nCó cái nịt để xoá");
+node deleteHead(node l) {
+    if(l == NULL) {
+        printf("Có cái gì đâu mà xoá");
     } else {
-        head = head->next;
+        l = l->next;
     }
-    return head;
+    return l;
 }
 
-node delete_Head(node head) {
-    if(head == NULL) {
-        printf("\nCó cái nịt để xoá");
-    } else {
-        head = head->next;
+node deleteEnd(node l) {
+    if(l == NULL) {
+        deleteHead(l);
     }
-    return head;
-}
-//xoá cuối
-
-node deleteEnd(node head, int value) {
-    if(head == NULL || head->next == NULL) {
-        return deleteHead(head, value);
-    }
-    node p = head;
+    node p = l;
     while(p->next->next != NULL) {
         p = p->next;
     }
-    p->next = NULL; //cho next = NULL
-    return head;
+    p->next = NULL;
+    return l;
 }
-node delete_End(node head) {
-    if(head == NULL || head->next == NULL) {
-        return delete_Head(head);
-    }
-    node p = head;
-    while(p->next->next != NULL) {
-        p = p->next;
-    }
-    p->next = NULL; //cho next = NULL
-    return head;
-}
-//xoá ở vị trí bất kì
 
-node deleteAt(node head, int position) {
-    if(position == 0 || head == NULL || head->next == NULL) {
-        head = delete_Head(head);
+node deleteAt(node l, int position) {
+    if(position == 0 || l == NULL) {
+        deleteHead(l);
     } else {
-        //tìm vị trí cần xoá. Dùng k để đếm
-        int k = 1;
-        node p = head;
+        int k=1;
+        node p = l;
         while(p->next->next != NULL && k != position) {
-            p = p->next;
+            p = p ->next;
             ++k;
         }
         if(k!= position) {
-            //Nếu duyệt hết danh sách mà chưa đến vị trí cần xoá thì mặc định xoá vị trí cuối
-            head = delete_End(head);
-            //Nếu không muốn xoá vị trí cuối cùng thì comment dòng trên và bỏ comment dòng duới
-            printf("Làm đéo gì có vị trí này mà xoá");
+            printf("Làm gì có vị trí này");
         } else {
             p->next = p->next->next;
         }
     }
-    return head;
+    return l;
 }
 
-int getValue(node head, int index) {
+node getValue(node l, int index) {
     int k = 0;
-    node p = head;
+    node  p = l;
     while(p->next == NULL && k != index) {
         ++k;
         p = p->next;
@@ -149,74 +112,57 @@ int getValue(node head, int index) {
     return p->data;
 }
 
-//hàm tìm kiếm trả về chỉ số của Node đầu tiên có giá trị bằng gía trị cần tìm
-int search(node head, int value) {
-    int position = 0; 
-    for(node p = head; p != NULL; p = p->next) {
-        if(p->data == NULL) {
+int search(node l, int value) {
+    int position = 0;
+    for(node p = l; p != NULL; p = p->next) {
+        if(p->data == value) {
             return position;
         }
-        ++position;
+        position++;
     }
     return -1;
 }
 
-//Xoá các node có giá trị chỉ định
-
-node delByVal(node head, int value) {
-    int position = search(head, value);
+node delByVal(node l, int value) {
+    int position = search(l, value);
     while(position != -1) {
-        deleteAt(head, position);
-        position = search(head, value);
+        deleteAt(l, position);
+        position = search(l, value);
     }
-    return head;
+    return l;
 }
 
-//duyệt Linked list
-
-void Traverser(node head) {
-    for(node p = head; p != NULL; p = p->next) {
-        printf("%3d", p->data);
-    }
+node init() {
+    node l;
+    l = NULL;
+    return l;
 }
-//Init Linked list
-node initHead() {
-    node head;
-    head = NULL;
-    return head;
-}
-
-//Nhập linked list
 
 node Input() {
-    node head = initHead();
+    node l = init();
     int n, value;
-    do {
-        printf("\nNhap so luong phan tu: ");
-        scanf("%d", &n);
-    } while(n <= 0);
-    for(int i = 0;i < n; i++) {
-        printf("Nhap gia tri can them vao list: ");
+    printf("Nhập số lượng phần tử: ");
+    scanf("%d", &n);
+    for(int i =0; i < n; i++) {
+        printf("Nhap gia tri can them: ");
         scanf("%d", &value);
-        head = addEnd(head, value);
+        l = addEnd(l, value);
     }
-    return head;
+    return l;
 }
 
-int main(){
-    printf("\n==Tao 1 danh sach lien ket==");
-    node head = Input();
-    Traverser(head);
- 
-    printf("\n==Thu them 1 phan tu vao linked list==");
-    head = addAt(head, 100, 2);
-    Traverser(head);
- 
-    printf("\n==Thu xoa 1 phan tu khoi linked list==");
-    head = deleteAt(head, 1);
-    Traverser(head);
- 
-    printf("\n==Thu tim kiem 1 phan tu trong linked list==");
-    int index = search(head, 5);
-    printf("\nTim thay tai chi so %d", index);
+void printList(node l) {
+    for(node p = l; p != NULL; p=p->next) {
+        printf("%2d", p->data);
+    }
+}
+
+int main() {
+    printf("Tao 1 danh sach lien ket\n");
+    node l = Input();
+    printList(l);
+    printf("Them 1 phan tu vao vi tri\n");
+    l = addAt(l, 5, 3);
+    printf("Danh sach sau khi them: \n");
+    printList(l);
 }
