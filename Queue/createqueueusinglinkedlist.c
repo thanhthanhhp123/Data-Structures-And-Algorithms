@@ -27,7 +27,7 @@ bool empty(queue *q) {
 	if(q->front == NULL && q->rear == NULL) {
 		return true;
 	} else {
-		return false
+		return false;
 	}
 }
 
@@ -56,12 +56,14 @@ int pop(queue *q) {
 }
 
 void display(node *l) {
-	if(l == NULL) {
-		printf("\nNothing");
-	} else {
-		printf("%d ",l->data);
-		display(l->next);
-	}
+	for(l; l != NULL; l=l->next) {
+   		if(l == NULL) {
+    		printf("Nothing");
+      		break;
+    	} else {
+      		printf("%d ",l->data);
+    	}
+  }
 }
 
 int main() {
