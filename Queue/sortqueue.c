@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
+#include<math.h>
 
 struct linkedList {
 	int data;
@@ -28,7 +29,7 @@ bool empty(queue *q) {
 	if(q->front == NULL && q->rear == NULL) {
 		return true;
 	} else {
-		return false
+		return false;
 	}
 }
 
@@ -59,37 +60,35 @@ int pop(queue *q) {
 }
 
 void display(node *l) {
-	if(l == NULL) {
-		printf("\nNothing");
-	} else {
-		printf("%d ",l->data);
-		display(l->next);
-	}
+    if(l == NULL) {
+        printf("\nQueue is empty");
+    } else {
+        for(; l != NULL; l = l->next) {
+            printf("%d ", l->data);
+        }
+    }
 }
 
 
 void sort(queue *q) {
-	node **p, *this;
-	if(empty(q)) {
-		printf("The queue is empty");
-	} else {
-		for(pp = &q->front; this = *pp; pp = &(*pp)->next){
-        node *other = this->next;
-            if (!this->next) break;
-            if (this->data < other->data) continue;
-            *pp = other;              
-            this->next = other->next;
-            other->next = this;       
+    queue *temp;
+    while(q->front->next != NULL) {
+        while (q->front->data > q->front->next->data && q->front != NULL) {
+            temp->front->data = q->front->data;
+            q->front->data = q->front->next->data;
+            q->front->next->data = temp->front->data;
         }
-	}
+    } 
 }
 
 int main() {
 	queue *q;
-	q = malloc(sizeof(struct linkedList));
+	q = malloc(sizeof(struct Queue));
 	init(q);
 	push(q, 10);
 	push(q, 1);
 	push(q, 5);
 	display(q->front);
+    // sort(&q);
+    return 0;
 }
