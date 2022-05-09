@@ -1,3 +1,5 @@
+
+   
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -12,6 +14,7 @@ node Createnode(int value) {
     node temp; //declare a node
     temp = (node)malloc(sizeof(struct linkedList)); 
     temp->data = value;
+    temp->next = NULL;
     return temp; 
 }
 
@@ -73,7 +76,7 @@ node deleteHead(node l) {
 
 node deleteEnd(node l) {
     if(l == NULL) {
-        deleteHead(l);
+        l = deleteHead(l);
     }
     node p = l;
     while(p->next->next != NULL) {
@@ -85,7 +88,7 @@ node deleteEnd(node l) {
 
 node deleteAt(node l, int position) {
     if(position == 0 || l == NULL) {
-        deleteHead(l);
+        l = deleteHead(l);
     } else {
         int k=1;
         node p = l;
@@ -152,17 +155,21 @@ node Input() {
 }
 
 void printList(node l) {
-    for(node p = l; p != NULL; p=p->next) {
-        printf("%2d", p->data);
+    node p;
+    p = l;
+    while(p != NULL) {
+        printf("%d ", p->data);
+        p = p->next;
+        continue;
     }
 }
 
 int main() {
     printf("Tao 1 danh sach lien ket\n");
     node l = Input();
-    printList(l);
-    printf("Them 1 phan tu vao vi tri\n");
-    l = addAt(l, 5, 3);
-    printf("Danh sach sau khi them: \n");
+    int position;
+    printf("Nhập vị trí cần xoá: ");
+    scanf("%d", &position);
+    l = deleteAt(l, position);
     printList(l);
 }
