@@ -9,7 +9,7 @@ struct BTnode {
 
 typedef struct BTnode node;
 
-node *creatNode(int value) {
+node *createNode(int value) {
     node *p = malloc(sizeof(struct BTnode));
     p->data = value;
     p->left = NULL;
@@ -19,7 +19,7 @@ node *creatNode(int value) {
 
 node *insert(node* node, int key) 
 { 
-    if (node == NULL) return creatNode(key); 
+    if (node == NULL) return createNode(key); 
   
     if (key < node->data) 
         node->left  = insert(node->left, key); 
