@@ -1,10 +1,11 @@
 <h1 align="center">Welcome to Data Structures and Algorithms 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-   <img alt="Issues" src=" https://img.shields.io/bitbucket/issues/thanhthanhhp123/Data-Structures-And-Algorithms" />
+   <img alt="Issues" src="https://img.shields.io/github/commits-since/thanhthanhhp123/Data-Structures-And-Algorithms/v.1.0.0/main" />
   <img alt="Commit" src="https://img.shields.io/github/commit-status/thanhthanhhp123/Data-Structures-And-Algorithms/main/dc029efce1d9237a7b3bfe5494b4f0ffe7dfd9f9" />
-  
- 
+  <img alt="LastCommit" src="https://img.shields.io/github/last-commit/thanhthanhhp123/Data-Structures-And-Algorithms" />
+  <img alt="LastCommit" src="https://img.shields.io/github/contributors/thanhthanhhp123/Data-Structures-And-Algorithms" />
+
   
 </p>
 
