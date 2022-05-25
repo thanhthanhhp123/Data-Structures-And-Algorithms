@@ -7,18 +7,24 @@
 
 ### 🏠 [Homepage](https://github.com/thanhthanhhp123/Data-Structures-And-Algorithms)
 
-## Install
+## Get the repository through git
 
 ```sh
-gh repo clone thanhthanhhp123/Data-Structures-And-Algorithms
+git clone https://github.com/thanhthanhhp123/Data-Structures-And-Algorithms.git
 ```
 
 ## Author
 
-👤 **thanhthanhhp123**
+👤 **Trần Quang Thành**
 
 * Website: https://github.com/thanhthanhhp123
-* Github: [@Trần Quang Thành](https://github.com/Trần Quang Thành)
+* Github: [@thanhthanhhp123](https://github.com/thanhthanhhp123)
+## CoAuthor
+
+👤 **Duong Tung**
+
+* Website: https://github.com/dtungpka
+* Github: [@dtungpka](https://github.com/dtungpka)
 
 ## 🤝 Contributing
 
@@ -29,4 +35,3 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 Give a ⭐️ if this project helped you!
 
 ***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
