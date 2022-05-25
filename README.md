@@ -7,7 +7,7 @@
 
 ### 🏠 [Homepage](https://github.com/thanhthanhhp123/Data-Structures-And-Algorithms)
 
-## Get the repository through git
+## Clone the repository
 
 ```sh
 git clone https://github.com/thanhthanhhp123/Data-Structures-And-Algorithms.git
@@ -19,7 +19,7 @@ git clone https://github.com/thanhthanhhp123/Data-Structures-And-Algorithms.git
 
 * Website: https://github.com/thanhthanhhp123
 * Github: [@thanhthanhhp123](https://github.com/thanhthanhhp123)
-## CoAuthor
+## coAuthor
 
 👤 **Duong Tung**
 
