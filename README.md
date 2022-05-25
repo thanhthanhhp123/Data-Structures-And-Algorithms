@@ -1,6 +1,11 @@
 <h1 align="center">Welcome to Data Structures and Algorithms 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+   <img alt="Issues" src=" https://img.shields.io/bitbucket/issues/thanhthanhhp123/Data-Structures-And-Algorithms" />
+  <img alt="Commit" src="https://img.shields.io/github/commit-status/thanhthanhhp123/Data-Structures-And-Algorithms/main/dc029efce1d9237a7b3bfe5494b4f0ffe7dfd9f9" />
+  
+ 
+  
 </p>
 
 > This repository contain most code and solution to homework of Data Structures and Algorithms subject 
