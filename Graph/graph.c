@@ -33,7 +33,7 @@ void create_graph(int n, int** vertices, float*** edges) {
 		(*vertices)[i] = INT_MIN;
 		for (int j = 0; j < n; j++)
 		{
-			(*edges)[i][j] = 0.f;
+			(*edges)[i][j] = INF;
 		}
 	}
 	//Cả hàm này có thể thay thế bằng đoạn dưới đây với n là hằng số (trên là n thay đổi đc)
@@ -69,8 +69,8 @@ bool exist(int value,int* arr,int n ) {
 /// <param name="x">đỉnh x</param>
 /// <param name="y">đỉnh y</param>
 /// <param name="edges">mảng cạnh</param>
-bool adjacent(int x, int y,int **edge) {
-	return edge[x][y] != 0.f;
+bool adjacent(int x, int y,float **edge) {
+	return edge[x][y] != INF;
 }
 
 /// <summary>
@@ -104,9 +104,10 @@ bool add_vertex(int value,int* vertices, int n) {
 /// <param name="edges">mảng cạnh</param>
 /// <param name="distance">khoảng cách giữa 2 đỉnh</param>
 /// <param name="n">số đỉnh hiện tại</param>
-void add_edge(int x, int y,float distance, float** edges, int n) {
+/// <param name="is_directed">true nếu là đồ thị có hướng, false nếu là đồ thị không có hướng</param>
+void add_edge(int x, int y,float distance, float** edges, int n,bool is_directed) {
 	edges[x][y] = distance;
-	edges[y][x] = distance;
+	if (!is_directed)edges[y][x] = distance;
 }
 
 /// <summary>
@@ -133,8 +134,8 @@ void delete_vertex(int value, int* vertices, int n, int** edges) {
 	vertices[idx] = INIT_VAL;
 	for (int i = 0; i < n; i++)
 	{
-		edges[i][idx] = 0.f;
-		edges[idx][i] = 0.f;
+		edges[i][idx] = INF;
+		edges[idx][i] = INF;
 	}
 }
 
@@ -288,6 +289,64 @@ void Dijkstra(int start, int* vertices, int n, float** edges) {
 		printf("%d -> %d: %.1f\n", vertices[start], vertices[i], dist[i]);
 	}
 }
+/// <summary>
+/// Tìm đường đi ngắn nhất tới tất cả các đỉnh theo thuật toán Bellman-Ford
+/// </summary>
+/// <param name="start">đỉnh bắt đầu</param>
+/// <param name="vertices">mảng đỉnh</param>
+/// <param name="n">số đỉnh hiện tại</param>
+/// <param name="edges">mảng cạnh</param>
+void BellmanFord(int start, int* vertices, int n, float** edges){
+	//Tạo mảng float lưu đường đi từ đỉnh bắt đầu tới các đỉnh khác
+	float *dist = (float*)calloc(n, sizeof(float));
+	//Tạo mảng lưu đỉnh trước đỉnh hiện tại
+	int *predecessor = (int*)calloc(n, sizeof(int));
+	//Khởi tạo các giá trị cho mảng dist, predecessor
+	for (int i = 0; i < n; i++)
+	{
+		dist[i] = INF;
+		predecessor[i] = -1;
+	}
+	//Thêm đỉnh bắt đầu vào mảng đã duyệt
+	dist[start] = 0;
+	//Relax all edges |V| - 1 times. 
+	//Lặp qua các đỉnh trong đồ thị
+	for (int i = 0; i < n-1; i++){
+		//Lặp qua các cạnh trong đồ thị
+		for (int u = 0; u < n; u++){
+			for (int v = 0; v < n; v++){
+				//Nếu đỉnh u kề với đỉnh v, và đường đi từ u đến v nhỏ hơn đường đi từ u đến v trước đó
+				if (dist[u] != INF && dist[u] + edges[u][v] < dist[v]){
+					//Cập nhật đường đi từ u đến v
+					dist[v] = dist[u] + edges[u][v];
+					//Cập nhật đỉnh trước đỉnh v
+					predecessor[v] = u;
+				}
+			}
+		}
+		//DONE: Check for negative-weight cycles.
+		//Kiểm tra xem có chu trình âm không.
+		for (int u = 0; u < n; u++){
+			for (int v = 0; v < n; v++){
+				//Nếu đỉnh u kề với đỉnh v, khoảng_cách(u) + trọng_số(u,v) < khoảng_cách(v) 
+				if (dist[u] != INF && dist[u] + edges[u][v] < dist[v]){
+					printf("Do thi chua chu trinh am\n");
+					return;
+				}
+			}
+		}
+
+	}
+	//Print the shortest distances.
+	//In ra kết quả
+	printf("\n");
+	for (int i = 0; i < n; i++)
+	{
+		printf("%d -> %d: %.1f\n", vertices[start], vertices[i], dist[i]);
+	}
+}
+
+
 
 int main() {
 	//Khởi tạo đỉnh
@@ -304,26 +363,37 @@ int main() {
 		add_vertex(i, vertices, n);
 	}
 	//Thêm cạnh vào các đỉnh
-	add_edge(0, 1, 1.f, edges, n);
-	add_edge(0, 2, 2.f, edges, n);
-	add_edge(1, 3, 3.f, edges, n);
-	add_edge(2, 3, 4.f, edges, n);
-	add_edge(3, 4, 5.f, edges, n);
-	add_edge(4, 0, 6.f, edges, n);
+	add_edge(0, 1, 9.f, edges, n,true);
+	add_edge(0, 2, 3.f, edges, n,true);
+	add_edge(1, 2, 6.f, edges, n,true);
+	add_edge(2, 1, 2.f, edges, n,true);
+	add_edge(1, 4, 2.f, edges, n,true);
+	add_edge(2, 3, 1.f, edges, n,true);
+	add_edge(3, 2, 2.f, edges, n,true);
+	add_edge(3, 4, 2.f, edges, n,true);
 	//In ra đồ thị
 	for (int i = 0; i < n; i++)
 	{
 		for (int j = 0; j < n; j++)
 		{
-			printf("%.1f ", edges[i][j]);
+			if(edges[i][j] != INF)
+				printf("%3.1f ", edges[i][j]);
+			else printf("INF ");
+			
 		}
 		printf("\n");
 	}
 	//Chọn điểm bắt đầu là đỉnh có giá trị 0
 	int start = index(0, vertices, n);
 	//Duyệt đồ thị theo bfs và dfs
+	printf("\nDuyet đo thi theo bfs\n");
 	BFS(start, vertices, n, edges); 
+	printf("\nDuyet đo thi theo dfs\n");
 	DFS(start, vertices, n, edges);
 	//Thuật toán dijkstra, tìm đường đi ngắn nhất từ đỉnh bắt đầu đến tất cả các đỉnh
+	printf("\nDijkstra\n");
 	Dijkstra(start, vertices, n, edges);
+	//Thuật toán bellman-ford, tìm đường đi ngắn nhất từ đỉnh bắt đầu đến tất cả các đỉnh
+	printf("\nBellman-Ford\n");
+	BellmanFord(start, vertices, n, edges);
 }
